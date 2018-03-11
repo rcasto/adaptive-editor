@@ -8,13 +8,14 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "npm-run-all build:vendor start:server",
+    "start": "npm-run-all build start:*",
     "start:server": "node server.js",
-    "build:vendor": "npm-run-all clean --parallel build:ckeditor build:adaptivecards build:adaptive-html build:markdown-it",
+    "build": "npm-run-all clean --parallel build:*",
     "build:ckeditor": "make-dir public/vendors/ckeditor && ncp node_modules/ckeditor public/vendors/ckeditor",
     "build:adaptivecards": "cpy node_modules/adaptivecards/dist/adaptivecards.min.js public/vendors",
     "build:adaptive-html": "cpy node_modules/adaptive-html/dist/adaptive-html.iife.min.js public/vendors",
     "build:markdown-it": "cpy node_modules/markdown-it/dist/markdown-it.min.js public/vendors",
+    "build:normalize.css": "cpy node_modules/normalize.css/normalize.css public/vendors",
     "clean": "rimraf public/vendors"
   },
   "keywords": [
@@ -31,7 +32,8 @@
     "compression": "^1.7.2",
     "express": "^4.16.2",
     "helmet": "^3.12.0",
-    "markdown-it": "^8.4.1"
+    "markdown-it": "^8.4.1",
+    "normalize.css": "^8.0.0"
   },
   "devDependencies": {
     "cpy-cli": "^1.0.1",

@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Adaptive Editor</title>
-    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="/vendors/normalize.css">
     <style>
-        textarea {
+        textarea, .adaptive-default-content {
             display: none;
         }
         .adaptive-preview > .ac-container {
@@ -21,6 +21,16 @@
 <body>
     <textarea id="adaptive-ckeditor"></textarea>
     <div class="adaptive-preview"></div>
+    <div class="adaptive-default-content">
+        <h1>Hey there!</h1>
+        <p>
+            Go ahead and edit this, remove it, or whatever. Just do you.
+            <br />
+            There will be a <strong>preview</strong> though. That&#39;s an <a href="https://adaptivecards.io/">Adaptive Card</a> being rendered.
+    </p>
+        <p>Cheers!</p>
+        <p><img alt="Beer cheers!" src="/images/beercheers.png" style="height:640px; width:640px" /></p>
+    </div>
 
     <script src="/vendors/ckeditor/ckeditor.js"></script>
     <script src="/vendors/markdown-it.min.js"></script>
@@ -64,14 +74,15 @@
 
         editor.on('change', debounce(function (event) {
             var html = event.editor.getData();
-            if (!html) {
-                return;
-            }
             var adaptiveJson = AdaptiveHtml.transform(html);
             adaptiveCard.parse(adaptiveJson);
             adaptivePreview.textContent = '';
             adaptivePreview.appendChild(adaptiveCard.render());
         }, debounceTimeInMs));
+        editor.on('instanceReady', function (event) {
+            var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML;
+            editor.setData(adaptiveEditorDefaultContent);
+        });
     </script>
 </body>
 </html>`
