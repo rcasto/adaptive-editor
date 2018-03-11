@@ -79,6 +79,7 @@
             adaptivePreview.textContent = '';
             adaptivePreview.appendChild(adaptiveCard.render());
         }, debounceTimeInMs));
+        
         editor.on('instanceReady', function (event) {
             var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML;
             editor.setData(adaptiveEditorDefaultContent);
