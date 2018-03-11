@@ -28,6 +28,7 @@
     "adaptive-html": "^1.1.8",
     "adaptivecards": "^1.0.0",
     "ckeditor": "^4.8.0",
+    "compression": "^1.7.2",
     "express": "^4.16.2",
     "markdown-it": "^8.4.1"
   },
