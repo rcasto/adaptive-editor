@@ -1,0 +1,55 @@
+{
+  "_from": "ckeditor",
+  "_id": "ckeditor@4.8.0",
+  "_inBundle": false,
+  "_integrity": "sha1-XUUPoCpo1aFDz1YZdU+/DATK1CY=",
+  "_location": "/ckeditor",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ckeditor",
+    "name": "ckeditor",
+    "escapedName": "ckeditor",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ckeditor/-/ckeditor-4.8.0.tgz",
+  "_shasum": "5d450fa02a68d5a143cf5619754fbf0c04cad426",
+  "_spec": "ckeditor",
+  "_where": "/home/rcasto/Downloads/AdaptiveEditor",
+  "author": {
+    "name": "CKSource",
+    "url": "http://cksource.com/"
+  },
+  "bugs": {
+    "url": "http://dev.ckeditor.com"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "JavaScript WYSIWYG web text editor.",
+  "homepage": "http://ckeditor.com",
+  "keywords": [
+    "ckeditor",
+    "fckeditor",
+    "editor",
+    "wysiwyg",
+    "html",
+    "richtext",
+    "text",
+    "javascript"
+  ],
+  "license": "(GPL-2.0 OR LGPL-2.1 OR MPL-1.1)",
+  "main": "ckeditor.js",
+  "name": "ckeditor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckeditor/ckeditor-releases.git"
+  },
+  "version": "4.8.0"
+}

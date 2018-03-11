@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test AdaptiveHtml Client</title>
+    <title>Adaptive Editor</title>
     <link rel="stylesheet" href="/normalize.css">
     <style>
         textarea {
@@ -22,9 +22,9 @@
     <textarea id="adaptive-ckeditor"></textarea>
     <div class="adaptive-preview"></div>
 
-    <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
-    <script src="https://unpkg.com/adaptivecards/dist/adaptivecards.js"></script>
-    <script src="/adaptive-html.js"></script>
+    <script src="/vendors/ckeditor/ckeditor.js"></script>
+    <script src="/vendors/adaptivecards.min.js"></script>
+    <script src="/vendors/adaptive-html.iife.min.js"></script>
     <script>
         var editor = CKEDITOR.replace('adaptive-ckeditor');
         var adaptivePreview = document.querySelector('.adaptive-preview');
@@ -69,7 +69,7 @@
             var adaptiveJson = AdaptiveHtml.transform(html);
             adaptiveCard.parse(adaptiveJson);
             adaptivePreview.textContent = '';
-            adaptivePreview.appendChild(adaptiveHtml);
+            adaptivePreview.appendChild(adaptiveCard.render());
         }, debounceTimeInMs));
     </script>
 </body>
