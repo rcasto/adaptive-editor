@@ -1,7 +1,11 @@
 {
   "name": "adaptive-editor",
   "version": "1.0.0",
-  "description": "",
+  "description": "A demo WYSIWYG editor for Adaptive Cards",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rcasto/adaptive-editor.git"
+  },
   "main": "server.js",
   "scripts": {
     "start": "npm-run-all build:vendor start:server",
@@ -13,9 +17,13 @@
     "build:markdown-it": "cpy node_modules/markdown-it/dist/markdown-it.min.js public/vendors",
     "clean": "rimraf public/vendors"
   },
-  "keywords": [],
+  "keywords": [
+    "wysiwyg",
+    "wysiwyg-editor",
+    "adaptivecards"
+  ],
   "author": "Richie Casto",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "adaptive-html": "^1.1.8",
     "adaptivecards": "^1.0.0",
