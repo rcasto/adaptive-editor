@@ -6,10 +6,11 @@
   "scripts": {
     "start": "npm-run-all build:vendor start:server",
     "start:server": "node server.js",
-    "build:vendor": "npm-run-all clean --parallel build:ckeditor build:adaptivecards build:adaptive-html",
+    "build:vendor": "npm-run-all clean --parallel build:ckeditor build:adaptivecards build:adaptive-html build:markdown-it",
     "build:ckeditor": "make-dir public/vendors/ckeditor && ncp node_modules/ckeditor public/vendors/ckeditor",
     "build:adaptivecards": "cpy node_modules/adaptivecards/dist/adaptivecards.min.js public/vendors",
     "build:adaptive-html": "cpy node_modules/adaptive-html/dist/adaptive-html.iife.min.js public/vendors",
+    "build:markdown-it": "cpy node_modules/markdown-it/dist/markdown-it.min.js public/vendors",
     "clean": "rimraf public/vendors"
   },
   "keywords": [],
@@ -19,7 +20,8 @@
     "adaptive-html": "^1.1.8",
     "adaptivecards": "^1.0.0",
     "ckeditor": "^4.8.0",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "markdown-it": "^8.4.1"
   },
   "devDependencies": {
     "cpy-cli": "^1.0.1",
