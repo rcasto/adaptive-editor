@@ -74,10 +74,14 @@
 
         editor.on('change', debounce(function (event) {
             var html = event.editor.getData();
-            var adaptiveJson = AdaptiveHtml.transform(html);
+            var adaptiveJson = AdaptiveHtml.transform(html), adaptiveHtml;
             adaptiveCard.parse(adaptiveJson);
+            adaptiveHtml = adaptiveCard.render();
             adaptivePreview.textContent = '';
-            adaptivePreview.appendChild(adaptiveCard.render());
+            if (adaptiveHtml) {
+                adaptivePreview.appendChild(adaptiveHtml);
+            }
+            console.log(JSON.stringify(adaptiveJson, null, '\t'));
         }, debounceTimeInMs));
 
         editor.on('instanceReady', function (event) {
