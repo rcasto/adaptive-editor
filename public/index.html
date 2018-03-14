@@ -37,7 +37,22 @@
     <script src="/vendors/adaptivecards.min.js"></script>
     <script src="/vendors/adaptive-html.iife.min.js"></script>
     <script>
-        var editor = CKEDITOR.replace('adaptive-ckeditor');
+        var editor = CKEDITOR.replace('adaptive-ckeditor', {
+            // width: 100,
+            // height: 100,
+            toolbarGroups: [
+                { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
+                { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+                { name: 'editing',     groups: [ 'find', 'selection' ] },
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                { name: 'paragraph',   groups: [ 'list', 'indent', 'align' ] },
+                { name: 'links' },
+                { name: 'insert' }
+            ],
+            customConfig: '',
+            removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Table,HorizontalRule',
+            removeDialogTabs: 'link:advanced'
+        });
         var adaptivePreview = document.querySelector('.adaptive-preview');
         var adaptiveCard = new AdaptiveCards.AdaptiveCard();
         var debounceTimeInMs = 50;
