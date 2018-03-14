@@ -6,28 +6,120 @@
     <title>Adaptive Editor</title>
     <link rel="stylesheet" href="/vendors/normalize.css">
     <style>
-        textarea, .adaptive-default-content {
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+        #adaptive-ckeditor, .adaptive-default-content, .adaptive-preview-json, .adaptive-preview-view {
             display: none;
         }
+        .cke_editor_adaptive-ckeditor {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .adaptive-preview, .adaptive-preview-json {
+            clear: right;
+            max-height: calc(100% - 34px);
+            height: 100%;
+            width: 100%;
+        }
+        .adaptive-preview-json {
+            resize: none;
+        }
+        .adaptive-toggle-preview {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 6px;
+        }
+        .adaptive-toggle-json {
+            margin: 6px;
+        }
+
+        /*
+            Css Customization of Adaptive Cards
+        */
         .adaptive-preview > .ac-container {
-            margin-top: 6px;
             border: 4px solid #E6E6E6;
         }
         .ac-container p {
             margin: 0;
         }
+
+        /*
+            Slider code taken and modified from:
+            https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch 
+        */
+        .switch {
+            position: relative;
+            float: right;
+            width: 60px;
+            height: 34px;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
     <textarea id="adaptive-ckeditor"></textarea>
-    <div class="adaptive-preview"></div>
+    <div class="adaptive-preview-view">
+        <div>
+            <label class="switch">
+                <input type="checkbox" class="adaptive-toggle-json">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="adaptive-preview"></div>
+        <textarea class="adaptive-preview-json" readonly></textarea>
+    </div>
+    <button class="adaptive-toggle-preview">Preview</button>
     <div class="adaptive-default-content">
         <h1>Hey there!</h1>
         <p>
             Go ahead and edit this, remove it, or whatever. Just do you.
             <br />
-            There will be a <strong>preview</strong> though. That&#39;s an <a href="https://adaptivecards.io/">Adaptive Card</a> being rendered.
-    </p>
+            You can toggle to see a <strong>preview</strong> <a href="https://adaptivecards.io/">Adaptive Card</a> being rendered though.
+            <br />
+            Also if you want to see the Adaptive Card JSON, you can toggle that in preview mode.
+        </p>
         <p>Cheers!</p>
         <p><img alt="Beer cheers!" src="/images/beercheers.png" style="height:640px; width:640px" /></p>
     </div>
@@ -37,9 +129,11 @@
     <script src="/vendors/adaptivecards.min.js"></script>
     <script src="/vendors/adaptive-html.iife.min.js"></script>
     <script>
-        var editor = CKEDITOR.replace('adaptive-ckeditor', {
-            // width: 100,
-            // height: 100,
+        var windowSize = getWindowSize();
+        var editor;
+        var editorConfig = {
+            width: windowSize.width,
+            height: windowSize.height,
             toolbarGroups: [
                 { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
                 { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
@@ -51,9 +145,15 @@
             ],
             customConfig: '',
             removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Table,HorizontalRule',
-            removeDialogTabs: 'link:advanced'
-        });
-        var adaptivePreview = document.querySelector('.adaptive-preview');
+            removeDialogTabs: 'link:advanced',
+            resize_enabled: false,
+            removePlugins: 'elementspath'
+        };
+        var adaptivePreview;
+        var adaptivePreviewJSON;
+        var adaptivePreviewView;
+        var adaptiveTogglePreview;
+        var adaptiveToggleJSON;
         var adaptiveCard = new AdaptiveCards.AdaptiveCard();
         var debounceTimeInMs = 50;
 
@@ -87,22 +187,92 @@
             };
         }
 
-        editor.on('change', debounce(function (event) {
-            var html = event.editor.getData();
-            var adaptiveJson = AdaptiveHtml.transform(html), adaptiveHtml;
-            adaptiveCard.parse(adaptiveJson);
-            adaptiveHtml = adaptiveCard.render();
-            adaptivePreview.textContent = '';
-            if (adaptiveHtml) {
-                adaptivePreview.appendChild(adaptiveHtml);
+        function getWindowSize() {
+            return {
+                width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+            };
+        }
+
+        function resizeEditor(editor) {
+            windowSize = getWindowSize();
+            editor.resize(windowSize.width, windowSize.height);
+        }
+
+        function startEditor() {
+            editor = CKEDITOR.replace('adaptive-ckeditor', editorConfig);
+
+            editor.on('change', debounce(function (event) {
+                var html = event.editor.getData();
+                var adaptiveJson = AdaptiveHtml.transform(html), adaptiveHtml;
+                var prettyAdaptiveJsonString = JSON.stringify(adaptiveJson, null, '\t');
+                adaptiveCard.parse(adaptiveJson);
+                adaptiveHtml = adaptiveCard.render();
+                adaptivePreview.textContent = '';
+                if (adaptiveHtml) {
+                    adaptivePreview.appendChild(adaptiveHtml);
+                }
+                adaptivePreviewJSON.textContent = prettyAdaptiveJsonString;
+                console.log(prettyAdaptiveJsonString);
+            }, debounceTimeInMs));
+
+            editor.on('instanceReady', function (event) {
+                var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML;
+                event.editor.setData(adaptiveEditorDefaultContent);
+            });
+        }
+
+        function togglePreview() {
+            var previewDisplay = window.getComputedStyle(adaptivePreviewView).display;
+            if (previewDisplay === 'none') {
+                adaptivePreviewView.style.display = 'block';
+                editor.container.setStyle('display', 'none');
+                adaptiveTogglePreview.textContent = 'Editor';
+            } else {
+                adaptivePreviewView.style.display = 'none';
+                editor.container.setStyle('display', '');
+                adaptiveTogglePreview.textContent = 'Preview';
+
             }
-            console.log(JSON.stringify(adaptiveJson, null, '\t'));
+        }
+
+        function togglePreviewJSON() {
+            var previewJsonDisplay = window.getComputedStyle(adaptivePreviewJSON).display;
+            if (previewJsonDisplay === 'none') {
+                adaptivePreviewJSON.style.display = 'block';
+                adaptivePreview.style.display = 'none';
+            } else  {
+                adaptivePreviewJSON.style.display = 'none';
+                adaptivePreview.style.display = 'block';
+            }
+        }
+
+        window.addEventListener('resize', debounce(function () {
+            resizeEditor(editor);
         }, debounceTimeInMs));
 
-        editor.on('instanceReady', function (event) {
-            var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML;
-            event.editor.setData(adaptiveEditorDefaultContent);
+        document.addEventListener('DOMContentLoaded', function () {
+            startEditor();
+
+            adaptivePreview = document.querySelector('.adaptive-preview');
+            adaptiveTogglePreview = document.querySelector('.adaptive-toggle-preview');
+            adaptivePreviewJSON = document.querySelector('.adaptive-preview-json');
+            adaptivePreviewView = document.querySelector('.adaptive-preview-view');
+            adaptiveToggleJSON = document.querySelector('.adaptive-toggle-json');
+
+            adaptiveTogglePreview.addEventListener('click', togglePreview);
+            adaptiveToggleJSON.addEventListener('click', togglePreviewJSON);
+            adaptiveToggleJSON.addEventListener('keyup', function (event) {
+                if (event.keyCode === 13 || event.which === 13) {
+                    if (event.target.getAttribute('checked') === 'true') {
+                        event.target.setAttribute('checked', 'false');
+                    } else  {
+                        event.target.setAttribute('checked', 'true');   
+                    }
+                    togglePreviewJSON();
+                }
+            });
         });
     </script>
 </body>
-</html>`
+</html>
