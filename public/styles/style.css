@@ -1,0 +1,47 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+#adaptive-ckeditor, .adaptive-default-content, .adaptive-preview-json, .adaptive-preview-view {
+    display: none;
+}
+.cke_reset {
+    box-sizing: border-box !important;
+}
+#cke_adaptive-ckeditor {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+.adaptive-preview, .adaptive-preview-json {
+    clear: right;
+    max-height: calc(100% - 34px);
+    height: 100%;
+    width: 100%;
+}
+.adaptive-preview-json {
+    resize: none;
+}
+.adaptive-toggle-preview {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+.adaptive-toggle-json {
+    margin: 6px;
+}
+
+/* Updated stuff */
+.adaptive-preview-card-view, .adaptive-preview-json-view {
+    display: none;
+}
+
+/*
+    Css Customization of Adaptive Cards
+*/
+.adaptive-preview > .ac-container {
+    border: 6px solid #E6E6E6;
+}
+.ac-container p {
+    margin: 0;
+}

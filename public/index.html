@@ -5,121 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Adaptive Editor</title>
     <link rel="stylesheet" href="/vendors/normalize.css">
-    <style>
-        *, *:before, *:after {
-            box-sizing: border-box;
-        }
-        #adaptive-ckeditor, .adaptive-default-content, .adaptive-preview-json, .adaptive-preview-view {
-            display: none;
-        }
-        .cke_editor_adaptive-ckeditor {
-            display: block;
-            max-width: 100%;
-            max-height: 100%;
-        }
-        .adaptive-preview, .adaptive-preview-json {
-            clear: right;
-            max-height: calc(100% - 34px);
-            height: 100%;
-            width: 100%;
-        }
-        .adaptive-preview-json {
-            resize: none;
-        }
-        .adaptive-toggle-preview {
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            padding: 10px;
-        }
-        .adaptive-toggle-json {
-            margin: 6px;
-        }
-
-        /*
-            Css Customization of Adaptive Cards
-        */
-        .adaptive-preview > .ac-container {
-            border: 6px solid #E6E6E6;
-        }
-        .ac-container p {
-            margin: 0;
-        }
-
-        /*
-            Slider code taken and modified from:
-            https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch 
-        */
-        .switch {
-            position: relative;
-            float: right;
-            width: 60px;
-            height: 34px;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-        input:focus + .slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-        input:checked + .slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 34px;
-        }
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        /*
-            Clear fix hack
-        */
-        .clearfix:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-    </style>
+    <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <textarea id="adaptive-ckeditor"></textarea>
-    <div class="adaptive-preview-view">
-        <div class="clearfix" style="margin: 6px 6px 6px 0;">
-            <label class="switch">
-                <input type="checkbox" class="adaptive-toggle-json">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div class="adaptive-preview"></div>
-        <textarea class="adaptive-preview-json" readonly></textarea>
+    <!-- Editor view (default) -->
+    <div class="adaptive-editor-view">
+        <textarea id="adaptive-ckeditor"></textarea>
+        <button class="adaptive-toggle-preview">Preview</button>
     </div>
-    <button class="adaptive-toggle-preview">Preview</button>
+    <!-- Preview view -->
+    <div class="adaptive-preview-view">
+        <!-- Preview card view -->
+        <div class="adaptive-preview-card-view">
+            <div class="adaptive-preview"></div>
+            <button class="adaptive-toggle-json">JSON</button>
+            <button class="adaptive-toggle-editor">Editor</button>
+        </div>
+        <!-- Preview JSON view -->
+        <div class="adaptive-preview-json-view">
+            <textarea class="adaptive-preview-json" readonly></textarea>
+            <button class="adaptive-toggle-json">Card</button>
+            <button class="adaptive-toggle-editor">Editor</button>
+        </div>
+    </div>
+    <!-- This element acts as a template holder -->
     <div class="adaptive-default-content">
         <h1>Hey there!</h1>
         <p>
@@ -133,157 +42,10 @@
         <p>Cheers!</p>
         <p><img alt="Beer cheers!" src="/images/beercheers.png" style="height:240px; width:240px" /></p>
     </div>
-
     <script src="/vendors/ckeditor/ckeditor.js"></script>
     <script src="/vendors/markdown-it.min.js"></script>
     <script src="/vendors/adaptivecards.min.js"></script>
     <script src="/vendors/adaptive-html.iife.min.js"></script>
-    <script>
-        var windowSize = getWindowSize();
-        var editor;
-        var editorConfig = {
-            width: windowSize.width,
-            height: windowSize.height,
-            toolbarGroups: [
-                { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
-                { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-                { name: 'editing',     groups: [ 'find', 'selection' ] },
-                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-                { name: 'paragraph',   groups: [ 'list', 'indent', 'align' ] },
-                { name: 'links' },
-                { name: 'styles' },
-                { name: 'insert' }
-            ],
-            customConfig: '',
-            removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Table,HorizontalRule,Styles',
-            removeDialogTabs: 'link:advanced',
-            resize_enabled: false,
-            removePlugins: 'elementspath'
-        };
-        var adaptivePreview;
-        var adaptivePreviewJSON;
-        var adaptivePreviewView;
-        var adaptiveTogglePreview;
-        var adaptiveToggleJSON;
-        var adaptiveCard = new AdaptiveCards.AdaptiveCard();
-        var debounceTimeInMs = 50;
-
-        adaptiveCard.hostConfig = new AdaptiveCards.HostConfig({
-            fontFamily: 'Segoe UI, Segoe UI Web, Segoe UI Symbol, Helvetica Neue, BBAlpha Sans, S60 Sans, Arial, sans-serif',
-            fontSizes: {
-                default: 15
-            },
-            spacing: {
-                padding: 12
-            },
-            containerStyles: {
-                default: {
-                    backgroundColor: '#ffffff'
-                }
-            }
-        });
-
-        function debounce(func, debounceTimeInMs) {
-            var debounceId = null;
-            return function () {
-                var that = this;
-                var args = arguments;
-                if (debounceId) {
-                    clearTimeout(debounceId);
-                }
-                debounceId = setTimeout(function () {
-                    func.apply(that, args);
-                    debounceId = null;
-                }, debounceTimeInMs);
-            };
-        }
-
-        function getWindowSize() {
-            return {
-                width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-                height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-            };
-        }
-
-        function resizeEditor(editor) {
-            windowSize = getWindowSize();
-            editor.resize(windowSize.width, windowSize.height);
-        }
-
-        function startEditor() {
-            editor = CKEDITOR.replace('adaptive-ckeditor', editorConfig);
-
-            editor.on('change', debounce(function (event) {
-                var html = event.editor.getData();
-                var adaptiveJson = AdaptiveHtml.transform(html), adaptiveHtml;
-                var prettyAdaptiveJsonString = JSON.stringify(adaptiveJson, null, '\t');
-                adaptiveCard.parse(adaptiveJson);
-                adaptiveHtml = adaptiveCard.render();
-                adaptivePreview.textContent = '';
-                if (adaptiveHtml) {
-                    adaptivePreview.appendChild(adaptiveHtml);
-                }
-                adaptivePreviewJSON.textContent = prettyAdaptiveJsonString;
-                console.log(prettyAdaptiveJsonString);
-            }, debounceTimeInMs));
-
-            editor.on('instanceReady', function (event) {
-                var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML;
-                event.editor.setData(adaptiveEditorDefaultContent);
-            });
-        }
-
-        function togglePreview() {
-            var previewDisplay = window.getComputedStyle(adaptivePreviewView).display;
-            if (previewDisplay === 'none') {
-                adaptivePreviewView.style.display = 'block';
-                editor.container.setStyle('display', 'none');
-                adaptiveTogglePreview.textContent = 'Editor';
-            } else {
-                adaptivePreviewView.style.display = 'none';
-                editor.container.setStyle('display', '');
-                adaptiveTogglePreview.textContent = 'Preview';
-
-            }
-        }
-
-        function togglePreviewJSON() {
-            var previewJsonDisplay = window.getComputedStyle(adaptivePreviewJSON).display;
-            if (previewJsonDisplay === 'none') {
-                adaptivePreviewJSON.style.display = 'block';
-                adaptivePreview.style.display = 'none';
-            } else  {
-                adaptivePreviewJSON.style.display = 'none';
-                adaptivePreview.style.display = 'block';
-            }
-        }
-
-        window.addEventListener('resize', debounce(function () {
-            resizeEditor(editor);
-        }, debounceTimeInMs));
-
-        document.addEventListener('DOMContentLoaded', function () {
-            startEditor();
-
-            adaptivePreview = document.querySelector('.adaptive-preview');
-            adaptiveTogglePreview = document.querySelector('.adaptive-toggle-preview');
-            adaptivePreviewJSON = document.querySelector('.adaptive-preview-json');
-            adaptivePreviewView = document.querySelector('.adaptive-preview-view');
-            adaptiveToggleJSON = document.querySelector('.adaptive-toggle-json');
-
-            adaptiveTogglePreview.addEventListener('click', togglePreview);
-            adaptiveToggleJSON.addEventListener('click', togglePreviewJSON);
-            adaptiveToggleJSON.addEventListener('keyup', function (event) {
-                if (event.keyCode === 13 || event.which === 13) {
-                    if (event.target.getAttribute('checked') === 'true') {
-                        event.target.setAttribute('checked', 'false');
-                    } else  {
-                        event.target.setAttribute('checked', 'true');   
-                    }
-                    togglePreviewJSON();
-                }
-            });
-        });
-    </script>
+    <script src="/scripts/main.js"></script>
 </body>
 </html>
