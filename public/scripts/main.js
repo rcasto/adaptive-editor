@@ -20,13 +20,20 @@ var editorConfig = {
     removePlugins: 'elementspath'
 };
 var adaptivePreview;
-var adaptivePreviewJSON;
-var adaptivePreviewView;
-var adaptivePreviewCardView;
-var adaptiveTogglePreview;
-var adaptiveToggleJSON;
 var adaptiveCard = new AdaptiveCards.AdaptiveCard();
 var debounceTimeInMs = 50;
+
+// View elements
+var adaptiveEditorView;
+var adaptivePreviewView;
+var adaptivePreviewJsonView;
+var adaptivePreviewCardView;
+
+// Button elements
+var adaptiveTogglePreviewView;
+var adaptiveToggleJsonView;
+var adaptiveToggleEditorView;
+var adaptiveToggleCardView;
 
 adaptiveCard.hostConfig = new AdaptiveCards.HostConfig({
     fontFamily: 'Segoe UI, Segoe UI Web, Segoe UI Symbol, Helvetica Neue, BBAlpha Sans, S60 Sans, Arial, sans-serif',
@@ -93,26 +100,24 @@ function startEditor() {
     });
 }
 
-function togglePreviewCard() {
-    var previewDisplay = window.getComputedStyle(adaptivePreviewCardView).display;
-    if (previewDisplay === 'none') {
-        adaptivePreviewCardView.style.display = 'block';
-        editor.container.setStyle('display', 'none');
-    } else {
-        adaptivePreviewCardView.style.display = 'none';
-        editor.container.setStyle('display', '');
-    }
+function toggleEditorView() {
+    adaptivePreviewView.style.display = 'none';
+    adaptiveEditorView.style.display = 'block';
 }
 
-function togglePreviewJSON() {
-    var previewJsonDisplay = window.getComputedStyle(adaptivePreviewJSON).display;
-    if (previewJsonDisplay === 'none') {
-        adaptivePreviewJSON.style.display = 'block';
-        adaptivePreview.style.display = 'none';
-    } else {
-        adaptivePreviewJSON.style.display = 'none';
-        adaptivePreview.style.display = 'block';
-    }
+function togglePreview() {
+    adaptivePreviewView.style.display = 'block';
+    adaptiveEditorView.style.display = 'none';
+}
+
+function togglePreviewCardView() {
+    adaptivePreviewJsonView.style.display = 'none';
+    adaptivePreviewCardView.style.display = 'block';
+}
+
+function togglePreviewJsonView() {
+    adaptivePreviewJsonView.style.display = 'block';
+    adaptivePreviewCardView.style.display = 'none';
 }
 
 window.addEventListener('resize', debounce(function () {
@@ -122,22 +127,25 @@ window.addEventListener('resize', debounce(function () {
 document.addEventListener('DOMContentLoaded', function () {
     startEditor();
 
+    // Content elements
     adaptivePreview = document.querySelector('.adaptive-preview');
-    adaptiveTogglePreview = document.querySelector('.adaptive-toggle-preview');
     adaptivePreviewJSON = document.querySelector('.adaptive-preview-json');
-    adaptivePreviewCardView = document.querySelector('.adaptive-preview-card-view');
-    adaptiveToggleJSON = document.querySelector('.adaptive-toggle-json');
 
-    adaptiveTogglePreview.addEventListener('click', togglePreviewCard);
-    adaptiveToggleJSON.addEventListener('click', togglePreviewJSON);
-    adaptiveToggleJSON.addEventListener('keyup', function (event) {
-        if (event.keyCode === 13 || event.which === 13) {
-            if (event.target.getAttribute('checked') === 'true') {
-                event.target.setAttribute('checked', 'false');
-            } else {
-                event.target.setAttribute('checked', 'true');
-            }
-            togglePreviewJSON();
-        }
-    });
+    // View elements
+    adaptivePreviewView = document.querySelector('.adaptive-preview-view');
+    adaptiveEditorView = document.querySelector('.adaptive-editor-view');
+    adaptivePreviewJsonView = document.querySelector('.adaptive-preview-json-view');
+    adaptivePreviewCardView = document.querySelector('.adaptive-preview-card-view');
+
+    // Button elements
+    adaptiveTogglePreviewView = document.querySelector('.adaptive-toggle-preview');
+    adaptiveToggleEditorView = document.querySelectorAll('.adaptive-toggle-editor');
+    adaptiveToggleJsonView = document.querySelector('.adaptive-toggle-json');
+    adaptiveToggleCardView = document.querySelector('.adaptive-toggle-card');
+
+    // Assign button handlers
+    adaptiveTogglePreviewView.addEventListener('click', togglePreview);
+    adaptiveToggleEditorView.forEach(editorViewToggle => editorViewToggle.addEventListener('click', toggleEditorView));
+    adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
+    adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
 });
