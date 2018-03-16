@@ -19,9 +19,12 @@ var editorConfig = {
     resize_enabled: false,
     removePlugins: 'elementspath'
 };
-var adaptivePreview;
 var adaptiveCard = new AdaptiveCards.AdaptiveCard();
 var debounceTimeInMs = 50;
+
+// Content elements
+var adaptivePreview;
+var adaptivePreviewJson;
 
 // View elements
 var adaptiveEditorView;
@@ -90,7 +93,7 @@ function startEditor() {
         if (adaptiveHtml) {
             adaptivePreview.appendChild(adaptiveHtml);
         }
-        adaptivePreviewJSON.textContent = prettyAdaptiveJsonString;
+        adaptivePreviewJson.textContent = prettyAdaptiveJsonString;
         console.log(prettyAdaptiveJsonString);
     }, debounceTimeInMs));
 
@@ -120,6 +123,11 @@ function togglePreviewJsonView() {
     adaptivePreviewCardView.style.display = 'none';
 }
 
+function copyJsonToClipboard() {
+    adaptivePreviewJson.select();
+    document.execCommand('copy');
+}
+
 window.addEventListener('resize', debounce(function () {
     resizeEditor(editor);
 }, debounceTimeInMs));
@@ -129,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Content elements
     adaptivePreview = document.querySelector('.adaptive-preview');
-    adaptivePreviewJSON = document.querySelector('.adaptive-preview-json');
+    adaptivePreviewJson = document.querySelector('.adaptive-preview-json');
 
     // View elements
     adaptivePreviewView = document.querySelector('.adaptive-preview-view');
@@ -142,6 +150,9 @@ document.addEventListener('DOMContentLoaded', function () {
     adaptiveToggleEditorView = document.querySelectorAll('.adaptive-toggle-editor');
     adaptiveToggleJsonView = document.querySelector('.adaptive-toggle-json');
     adaptiveToggleCardView = document.querySelector('.adaptive-toggle-card');
+
+    // Assign content handlers
+    adaptivePreviewJson.addEventListener('click', copyJsonToClipboard);
 
     // Assign button handlers
     adaptiveTogglePreviewView.addEventListener('click', togglePreview);
