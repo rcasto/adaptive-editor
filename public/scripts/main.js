@@ -156,7 +156,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Assign button handlers
     adaptiveTogglePreviewView.addEventListener('click', togglePreview);
-    adaptiveToggleEditorView.forEach(editorViewToggle => editorViewToggle.addEventListener('click', toggleEditorView));
+    adaptiveToggleEditorView.forEach(function (editorViewToggle) {
+        editorViewToggle.addEventListener('click', toggleEditorView);
+    });
     adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
     adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
 });
