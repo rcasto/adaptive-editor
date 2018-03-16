@@ -85,7 +85,7 @@ function startEditor() {
 
     editor.on('change', debounce(function (event) {
         var html = event.editor.getData();
-        var adaptiveJson = AdaptiveHtml.transform(html), adaptiveHtml;
+        var adaptiveJson = AdaptiveHtml.toJSON(html), adaptiveHtml;
         var prettyAdaptiveJsonString = JSON.stringify(adaptiveJson, null, '\t');
         adaptiveCard.parse(adaptiveJson);
         adaptiveHtml = adaptiveCard.render();
