@@ -9,7 +9,7 @@
 }
 .adaptive-preview, 
 .adaptive-preview-json {
-    max-height: calc(100% - 48px);
+    max-height: calc(100% - 52px);
     height: 100%;
     width: 100%;
 }
@@ -22,6 +22,9 @@
     right: 0;
 }
 
+.adaptive-toggle-bar {
+    margin-top: 4px;
+}
 .adaptive-toggle-bar:after {
     /* Clearfix hack */
     content: "";
