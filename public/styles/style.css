@@ -57,7 +57,7 @@
 .adaptive-preview > .ac-container {
     border: 6px solid #E6E6E6;
     max-height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 .ac-container p {
     margin: 0;
