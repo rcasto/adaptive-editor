@@ -21,6 +21,7 @@ var editorConfig = {
 };
 var adaptiveCard = new AdaptiveCards.AdaptiveCard();
 var debounceTimeInMs = 50;
+var adaptiveSessionKey = 'adaptive-session';
 
 // Content elements
 var adaptivePreview;
@@ -80,6 +81,21 @@ function resizeEditor(editor) {
     editor.resize(windowSize.width, windowSize.height);
 }
 
+function saveSession() {
+    var html = editor.getData();
+    var adaptiveCardJson = AdaptiveHtml.toJSON(html);
+    sessionStorage.setItem(adaptiveSessionKey, JSON.stringify(adaptiveCardJson));
+}
+
+function restoreSession() {
+    var adaptiveCardJson = sessionStorage.getItem(adaptiveSessionKey);
+    if (!adaptiveCardJson) {
+        return null;
+    }
+    var adaptiveElem = AdaptiveHtml.toHTML(adaptiveCardJson);
+    return (adaptiveElem && adaptiveElem.outerHTML) || '';
+}
+
 function startEditor() {
     editor = CKEDITOR.replace('adaptive-ckeditor', editorConfig);
 
@@ -98,8 +114,12 @@ function startEditor() {
     }, debounceTimeInMs));
 
     editor.on('instanceReady', function (event) {
-        var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML;
-        event.editor.setData(adaptiveEditorDefaultContent);
+        var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML
+        var restoreAdaptiveSessionData = restoreSession();
+        if (restoreAdaptiveSessionData == null) {
+            restoreAdaptiveSessionData = adaptiveEditorDefaultContent;
+        }
+        event.editor.setData(restoreAdaptiveSessionData);
     });
 }
 
@@ -161,4 +181,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
     adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
+
+    window.addEventListener('beforeunload', function () {
+        saveSession();
+    });
 });
