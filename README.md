@@ -6,3 +6,4 @@ Utilizes:
 - [adaptivecards](https://www.npmjs.com/package/adaptivecards)
 - [adaptive-html](https://www.npmjs.com/package/adaptive-html)
 - [markdown-it](https://www.npmjs.com/package/markdown-it)
+- [normalize.css](https://www.npmjs.com/package/normalize.css)

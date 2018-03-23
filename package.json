@@ -26,14 +26,9 @@
   "author": "Richie Casto",
   "license": "MIT",
   "dependencies": {
-    "adaptive-html": "^2.0.1",
-    "adaptivecards": "^1.0.0",
-    "ckeditor": "^4.8.0",
     "compression": "^1.7.2",
     "express": "^4.16.2",
-    "helmet": "^3.12.0",
-    "markdown-it": "^8.4.1",
-    "normalize.css": "^8.0.0"
+    "helmet": "^3.12.0"
   },
   "devDependencies": {
     "cpy-cli": "^1.0.1",
