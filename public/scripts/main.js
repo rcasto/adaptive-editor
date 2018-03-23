@@ -17,7 +17,8 @@ var editorConfig = {
     removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Table,HorizontalRule,Styles',
     removeDialogTabs: 'link:advanced',
     resize_enabled: false,
-    removePlugins: 'elementspath'
+    removePlugins: 'elementspath',
+    format_tags: 'p;h1;h2;h3;h4;h5;h6'
 };
 var adaptiveCard = new AdaptiveCards.AdaptiveCard();
 var debounceTimeInMs = 50;
@@ -52,12 +53,7 @@ var defaultAdaptiveCardJson = {
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "You can toggle to see a **preview**",
-					"wrap": true
-				},
-				{
-					"type": "TextBlock",
-					"text": "[Adaptive Card](https://adaptivecards.io/) being rendered though.\n\nYou can also view the **JSON** in preview mode if you want.",
+					"text": "You can toggle to see a **preview** [Adaptive Card](https://adaptivecards.io/) being rendered though.\n\nYou can also view the **JSON** in preview mode if you want.",
 					"wrap": true
 				}
 			]
