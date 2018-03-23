@@ -22,6 +22,70 @@ var editorConfig = {
 var adaptiveCard = new AdaptiveCards.AdaptiveCard();
 var debounceTimeInMs = 50;
 var adaptiveSessionKey = 'adaptive-session';
+var defaultAdaptiveCardJson = {
+	"type": "AdaptiveCard",
+	"body": [
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Hey there!",
+					"wrap": true,
+					"size": "extraLarge",
+					"weight": "bolder"
+				}
+			]
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Go ahead and edit this, remove it, or whatever. Just do you.",
+					"wrap": true
+				}
+			]
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "You can toggle to see a **preview**",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "[Adaptive Card](https://adaptivecards.io/) being rendered though.\n\nYou can also view the **JSON** in preview mode if you want.",
+					"wrap": true
+				}
+			]
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Cheers!",
+					"wrap": true
+				}
+			]
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "Image",
+					"url": "/images/beercheers.png",
+					"altText": "Beer cheers!"
+				}
+			]
+		}
+	],
+	"actions": [],
+	"version": "1.0"
+};
 
 // Content elements
 var adaptivePreview;
@@ -90,7 +154,7 @@ function saveSession() {
 function restoreSession() {
     var adaptiveCardJson = sessionStorage.getItem(adaptiveSessionKey);
     if (!adaptiveCardJson) {
-        return null;
+        adaptiveCardJson = defaultAdaptiveCardJson;
     }
     var adaptiveElem = AdaptiveHtml.toHTML(adaptiveCardJson);
     return (adaptiveElem && adaptiveElem.outerHTML) || '';
@@ -114,11 +178,7 @@ function startEditor() {
     }, debounceTimeInMs));
 
     editor.on('instanceReady', function (event) {
-        var adaptiveEditorDefaultContent = document.querySelector('.adaptive-default-content').innerHTML
         var restoreAdaptiveSessionData = restoreSession();
-        if (restoreAdaptiveSessionData == null) {
-            restoreAdaptiveSessionData = adaptiveEditorDefaultContent;
-        }
         event.editor.setData(restoreAdaptiveSessionData);
     });
 }
