@@ -8,15 +8,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "npm-run-all start:*",
-    "start:server": "node server.js",
-    "build": "npm-run-all clean --parallel build:*",
-    "build:ckeditor": "make-dir public/vendors/ckeditor && ncp node_modules/ckeditor public/vendors/ckeditor",
-    "build:adaptivecards": "cpy node_modules/adaptivecards/dist/adaptivecards.min.js public/vendors",
-    "build:adaptive-html": "cpy node_modules/adaptive-html/dist/adaptive-html.iife.min.js public/vendors",
-    "build:markdown-it": "cpy node_modules/markdown-it/dist/markdown-it.min.js public/vendors",
-    "build:normalize.css": "cpy node_modules/normalize.css/normalize.css public/vendors",
-    "clean": "rimraf public/vendors"
+    "start": "node server.js"
   },
   "keywords": [
     "wysiwyg",
@@ -30,11 +22,5 @@
     "express": "^4.16.2",
     "helmet": "^3.12.0"
   },
-  "devDependencies": {
-    "cpy-cli": "^1.0.1",
-    "make-dir-cli": "^1.0.0",
-    "ncp": "^2.0.0",
-    "npm-run-all": "^4.1.2",
-    "rimraf": "^2.6.2"
-  }
+  "devDependencies": {}
 }
