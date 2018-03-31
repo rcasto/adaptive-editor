@@ -40,7 +40,11 @@
 }
 .adaptive-toggle {
     height: 48px;
+    width: 64px;
     padding: 6px;
+    background-color: #2196F3;
+    border-color: #2196F3;
+    border-radius: 12px 12px 0 0;
 }
 
 /* CKEditor style overrides */
