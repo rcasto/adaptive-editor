@@ -9,12 +9,15 @@
 }
 .adaptive-preview, 
 .adaptive-preview-json {
-    max-height: calc(100% - 52px);
+    max-height: calc(100% - 60px);
+    max-width: calc(100% - 12px);
     height: 100%;
     width: 100%;
+    margin: 6px;
 }
 .adaptive-preview-json {
     resize: none;
+    background-color: #f2f2f2;
 }
 .adaptive-toggle-preview {
     position: fixed;
@@ -22,9 +25,6 @@
     right: 0;
 }
 
-.adaptive-toggle-bar {
-    margin-top: 4px;
-}
 .adaptive-toggle-bar:after {
     /* Clearfix hack */
     content: "";
@@ -33,7 +33,7 @@
 }
 .adaptive-toggle-bar .adaptive-toggle {
     float: right;
-    margin-left: 4px;
+    margin-left: 6px;
 }
 .adaptive-toggle-bar .adaptive-toggle:last-child {
     margin-left: 0;
@@ -61,4 +61,8 @@
 }
 .ac-container p {
     margin: 0;
+}
+
+.adaptive-preview > .ac-container, .adaptive-preview-json {
+    border-radius: 12px;
 }
