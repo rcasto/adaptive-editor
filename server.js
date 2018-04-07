@@ -10,7 +10,7 @@ app.use(compression());
 app.use(helmet({
     noSniff: false
 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist/public')));
 
 app.get('/', (req, res) => {
     res.sendFile('index.html');

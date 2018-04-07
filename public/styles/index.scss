@@ -1,0 +1,61 @@
+@import 'constants';
+@import 'editor';
+@import 'adaptive-card';
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+#adaptive-ckeditor, 
+.adaptive-default-content, 
+.adaptive-preview-view, 
+.adaptive-preview-json-view {
+    display: none;
+}
+
+.adaptive-preview, 
+.adaptive-preview-json {
+    max-height: calc(100% - #{$adaptive-button-height} - #{$large-size});
+    max-width: calc(100% - #{$large-size});
+    height: 100%;
+    width: 100%;
+    margin: $default-size;
+}
+
+.adaptive-preview-json {
+    resize: none;
+    background-color: $adaptive-card-json-preview-background-color;
+    border-radius: $large-size;
+}
+
+.adaptive-toggle-preview {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.adaptive-toggle-bar {
+    &:after {
+        /* Clearfix hack */
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .adaptive-toggle {
+        float: right;
+        margin-left: $default-size;
+
+        &:last-child {
+            margin-left: 0;
+        }
+    }
+}
+
+.adaptive-button {
+    height: $adaptive-button-height;
+    width: $adaptive-button-width;
+    padding: $default-size;
+    background-color: $adaptive-button-color;
+    border-color: $adaptive-button-color;
+    border-radius: $large-size $large-size 0 0;
+}

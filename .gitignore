@@ -2,3 +2,4 @@ node_modules
 public/vendors
 deploy.sh
 .deployment
+dist

@@ -8,7 +8,14 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "build": "npm-run-all clean setup --parallel build:*",
+    "build:move": "ncp public/index.html dist/public/index.html",
+    "build:sass": "sass public/styles/index.scss dist/public/bundle.css",
+    "build:rollup": "rollup --config rollup.config.js",
+    "setup": "mkdirp dist/public",
+    "clean": "rimraf dist",
+    "start": "npm-run-all build start:server",
+    "start:server": "node server.js"
   },
   "keywords": [
     "wysiwyg",
@@ -22,5 +29,12 @@
     "express": "^4.16.3",
     "helmet": "^3.12.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "npm-run-all": "^4.1.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.57.1",
+    "sass": "^1.1.1"
+  }
 }

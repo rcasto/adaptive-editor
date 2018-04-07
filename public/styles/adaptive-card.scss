@@ -1,0 +1,10 @@
+.adaptive-preview > .ac-container {
+    border: $default-size solid $adaptive-card-border-color;
+    max-height: 100%;
+    overflow: auto;
+    border-radius: $large-size;
+}
+
+.ac-container p {
+    margin: 0;
+}
