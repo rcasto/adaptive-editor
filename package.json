@@ -9,7 +9,7 @@
   "main": "server.js",
   "scripts": {
     "build": "npm-run-all clean setup --parallel build:*",
-    "build:move": "ncp public/index.html dist/public/index.html",
+    "build:move": "npm-run-all --parallel move:html move:assets",
     "build:sass": "sass public/styles/index.scss dist/public/index.css --style=compressed",
     "build:rollup": "rollup --config rollup.config.js --minify",
     "dev": "npm-run-all clean setup --parallel build:move dev:*",
@@ -19,6 +19,8 @@
     "sass:build-watch": "chokidar 'public/styles/*.scss' -c 'npm run sass:build-dev'",
     "sass:build-dev": "sass public/styles/index.scss dist/public/index.css",
     "move:watch": "chokidar 'public/index.html' -c 'npm run build:move'",
+    "move:html": "ncp public/index.html dist/public/index.html",
+    "move:assets": "ncp public/images dist/public/images",    
     "setup": "mkdirp dist/public",
     "clean": "rimraf dist",
     "prestart": "npm run build",
