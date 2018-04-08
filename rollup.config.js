@@ -1,8 +1,31 @@
+import babel from 'rollup-plugin-babel';
+import uglify from 'rollup-plugin-uglify';
+
+var buildMinifiedLibrary = shouldMinify(process.argv);
+var plugins = [
+    babel({
+        exclude: 'node_modules/**' // only transpile our source code
+    })
+];
+
+if (buildMinifiedLibrary) {
+    plugins.unshift(uglify());
+}
+
+function shouldMinify(args) {
+    return (args || []).indexOf('--minify') > -1;
+}
+
 export default {
     input: './public/scripts/index.js',
     output: {
         format: 'iife',
         file: './dist/public/index.js',
-        name: 'AdativeEditor'
-    }
+        name: 'AdativeEditor',
+        globals: {
+            adaptivecards: 'window.AdaptiveCards'
+        }
+    },
+    plugins: plugins,
+    external: ['adaptivecards']
 };

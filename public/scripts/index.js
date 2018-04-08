@@ -2,9 +2,10 @@ import defaultAdaptiveCardJson from './defaultAdaptiveCard';
 import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
 import editorConfig from './editorConfig';
 import utilities from './utilities';
+import { AdaptiveCard, HostConfig } from 'adaptivecards';
 
 var editor;
-var adaptiveCard = new AdaptiveCards.AdaptiveCard();
+var adaptiveCard = new AdaptiveCard();
 var debounceTimeInMs = 50;
 var adaptiveSessionKey = 'adaptive-session';
 
@@ -24,7 +25,7 @@ var adaptiveToggleJsonView;
 var adaptiveToggleEditorView;
 var adaptiveToggleCardView;
 
-adaptiveCard.hostConfig = new AdaptiveCards.HostConfig(defaultAdaptiveCardHostConfig);
+adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);
 
 function resizeEditor(editor) {
     let windowSize = utilities.getWindowSize();
