@@ -17,10 +17,10 @@ function shouldMinify(args) {
 }
 
 export default {
-    input: './public/scripts/index.js',
+    input: 'public/scripts/index.js',
     output: {
         format: 'iife',
-        file: './dist/public/index.js',
+        file: 'dist/public/index.js',
         name: 'AdativeEditor',
         globals: {
             adaptivecards: 'window.AdaptiveCards',
