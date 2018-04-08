@@ -65,7 +65,7 @@ function startEditor() {
         console.log(prettyAdaptiveJsonString);
     }, debounceTimeInMs));
 
-    editor.on('instanceReady', function (event) {
+    editor.on('instanceReady', (event) => {
         var restoreAdaptiveSessionData = restoreSession();
         event.editor.setData(restoreAdaptiveSessionData);
     });
@@ -96,10 +96,6 @@ function copyJsonToClipboard() {
     document.execCommand('copy');
 }
 
-window.addEventListener('resize', utilities.debounce(function () {
-    resizeEditor(editor);
-}, debounceTimeInMs));
-
 document.addEventListener('DOMContentLoaded', function () {
     startEditor();
 
@@ -124,13 +120,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Assign button handlers
     adaptiveTogglePreviewView.addEventListener('click', togglePreview);
-    adaptiveToggleEditorView.forEach(function (editorViewToggle) {
+    adaptiveToggleEditorView.forEach(editorViewToggle => {
         editorViewToggle.addEventListener('click', toggleEditorView);
     });
     adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
     adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
 
-    window.addEventListener('beforeunload', function () {
-        saveSession();
-    });
+    window.addEventListener('resize', utilities.debounce(
+        () => resizeEditor(editor), debounceTimeInMs));
+    window.addEventListener('beforeunload', () => saveSession());
 });
