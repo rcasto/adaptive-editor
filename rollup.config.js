@@ -23,9 +23,10 @@ export default {
         file: './dist/public/index.js',
         name: 'AdativeEditor',
         globals: {
-            adaptivecards: 'window.AdaptiveCards'
+            adaptivecards: 'window.AdaptiveCards',
+            'adaptive-html': 'window.AdaptiveHtml'
         }
     },
     plugins: plugins,
-    external: ['adaptivecards']
+    external: ['adaptivecards', 'adaptive-html']
 };

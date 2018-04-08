@@ -3,6 +3,7 @@ import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
 import editorConfig from './editorConfig';
 import utilities from './utilities';
 import { AdaptiveCard, HostConfig } from 'adaptivecards';
+import AdaptiveHtml from 'adaptive-html';
 
 var editor;
 var adaptiveCard = new AdaptiveCard();
