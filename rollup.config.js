@@ -24,9 +24,10 @@ export default {
         name: 'AdativeEditor',
         globals: {
             adaptivecards: 'window.AdaptiveCards',
-            'adaptive-html': 'window.AdaptiveHtml'
+            'adaptive-html': 'window.AdaptiveHtml',
+            pell: 'window.pell'
         }
     },
     plugins: plugins,
-    external: ['adaptivecards', 'adaptive-html']
+    external: ['adaptivecards', 'adaptive-html', 'pell']
 };
