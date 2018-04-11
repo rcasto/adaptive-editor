@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Adaptive Editor</title>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/pell@1.0.4/dist/pell.min.css">
     <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
     <!-- Editor view (default) -->
     <div class="adaptive-editor-view">
-        <textarea id="adaptive-ckeditor"></textarea>
-        <button class="adaptive-button adaptive-toggle-preview">Preview</button>
+        <div id="adaptive-pell-editor"></div>
+        <button class="adaptive-button adaptive-toggle-preview">&#9737;</button>
     </div>
     <!-- Preview view -->
     <div class="adaptive-preview-view">
@@ -32,7 +33,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.ckeditor.com/4.9.0/standard/ckeditor.js"></script>
+    <script src="https://unpkg.com/pell@1.0.4/dist/pell.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/markdown-it@8.4.1/dist/markdown-it.min.js"></script>
     <script src="https://unpkg.com/adaptivecards@1.0.0/dist/adaptivecards.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/adaptive-html@2.2.0/dist/adaptive-html.iife.min.js"></script>

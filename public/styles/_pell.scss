@@ -1,0 +1,16 @@
+@import 'constants';
+
+#adaptive-pell-editor {
+    .pell-actionbar {
+        height: $pell-actionbar-height;
+    }
+    .pell-content {
+        height: calc(100% - 48px);
+    }
+    .pell-button {
+        height: 100%;
+    }
+    .pell-button-selected {
+        
+    }
+}

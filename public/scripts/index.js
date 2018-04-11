@@ -1,11 +1,10 @@
 import defaultAdaptiveCardJson from './defaultAdaptiveCard';
 import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
-import editorConfig from './editorConfig';
 import utilities from './utilities';
 import { AdaptiveCard, HostConfig } from 'adaptivecards';
 import AdaptiveHtml from 'adaptive-html';
+import Pell from './pell';
 
-var editor;
 var adaptiveCard = new AdaptiveCard();
 var debounceTimeInMs = 50;
 var adaptiveSessionKey = 'adaptive-session';
@@ -28,47 +27,25 @@ var adaptiveToggleCardView;
 
 adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);
 
-function resizeEditor(editor) {
-    let windowSize = utilities.getWindowSize();
-    editor.resize(windowSize.width, windowSize.height);
-}
-
-function saveSession() {
-    var html = editor.getData();
+function saveSession(editor) {
+    var html = editor.content.innerHTML;
     var adaptiveCardJson = AdaptiveHtml.toJSON(html);
     sessionStorage.setItem(adaptiveSessionKey, JSON.stringify(adaptiveCardJson));
 }
 
-function restoreSession() {
+function restoreSession(editor) {
     var adaptiveCardJson = sessionStorage.getItem(adaptiveSessionKey);
     if (!adaptiveCardJson) {
         adaptiveCardJson = defaultAdaptiveCardJson;
     }
     var adaptiveElem = AdaptiveHtml.toHTML(adaptiveCardJson);
-    return (adaptiveElem && adaptiveElem.outerHTML) || '';
-}
-
-function startEditor() {
-    editor = CKEDITOR.replace('adaptive-ckeditor', editorConfig());
-
-    editor.on('change', utilities.debounce(function (event) {
-        var html = event.editor.getData();
-        var adaptiveJson = AdaptiveHtml.toJSON(html), adaptiveHtml;
-        var prettyAdaptiveJsonString = JSON.stringify(adaptiveJson, null, '\t');
-        adaptiveCard.parse(adaptiveJson);
-        adaptiveHtml = adaptiveCard.render();
-        adaptivePreview.textContent = '';
-        if (adaptiveHtml) {
-            adaptivePreview.appendChild(adaptiveHtml);
-        }
-        adaptivePreviewJson.textContent = prettyAdaptiveJsonString;
-        console.log(prettyAdaptiveJsonString);
-    }, debounceTimeInMs));
-
-    editor.on('instanceReady', (event) => {
-        var restoreAdaptiveSessionData = restoreSession();
-        event.editor.setData(restoreAdaptiveSessionData);
-    });
+    editor.content.innerHTML = (adaptiveElem && adaptiveElem.outerHTML) || '';
+    handleEditorChange(editor, editor.content.innerHTML);
+    return {
+        editor,
+        html: editor.content.innerHTML,
+        json: adaptiveCardJson
+    };
 }
 
 function toggleEditorView() {
@@ -96,16 +73,21 @@ function copyJsonToClipboard() {
     document.execCommand('copy');
 }
 
+function handleEditorChange(editor, html) {
+    console.log(html);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    startEditor();
+    var editor = Pell.startEditor('#adaptive-pell-editor', handleEditorChange);
+    var adaptiveSession = restoreSession(editor);
 
     // Content elements
     adaptivePreview = document.querySelector('.adaptive-preview');
     adaptivePreviewJson = document.querySelector('.adaptive-preview-json');
 
     // View elements
-    adaptivePreviewView = document.querySelector('.adaptive-preview-view');
     adaptiveEditorView = document.querySelector('.adaptive-editor-view');
+    adaptivePreviewView = document.querySelector('.adaptive-preview-view');
     adaptivePreviewJsonView = document.querySelector('.adaptive-preview-json-view');
     adaptivePreviewCardView = document.querySelector('.adaptive-preview-card-view');
 
@@ -120,13 +102,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Assign button handlers
     adaptiveTogglePreviewView.addEventListener('click', togglePreview);
-    adaptiveToggleEditorView.forEach(editorViewToggle => {
-        editorViewToggle.addEventListener('click', toggleEditorView);
-    });
+    adaptiveToggleEditorView.forEach(editorViewToggle => editorViewToggle.addEventListener('click', toggleEditorView));
     adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
     adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
 
-    window.addEventListener('resize', utilities.debounce(
-        () => resizeEditor(editor), debounceTimeInMs));
-    window.addEventListener('beforeunload', () => saveSession());
+    window.addEventListener('beforeunload', () => saveSession(editor));
 });
