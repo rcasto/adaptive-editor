@@ -4,8 +4,7 @@ import { AdaptiveCard, HostConfig } from 'adaptivecards';
 import AdaptiveHtml from 'adaptive-html';
 import Pell from './pell';
 
-var adaptiveCard = new AdaptiveCard();
-var debounceTimeInMs = 50;
+var adaptiveCard;
 var adaptiveSessionKey = 'adaptive-session';
 
 // Content elements
@@ -23,8 +22,6 @@ var adaptiveTogglePreviewView;
 var adaptiveToggleJsonView;
 var adaptiveToggleEditorView;
 var adaptiveToggleCardView;
-
-adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);
 
 function saveSession(json) {
     sessionStorage.setItem(adaptiveSessionKey, JSON.stringify(json));
@@ -72,12 +69,15 @@ function handleEditorChange(html) {
 
     adaptiveCard.parse(adaptiveCardJson);
     adaptiveCard.render(adaptivePreview);
-    
+
     saveSession(adaptiveCardJson);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     var editor = Pell.startEditor('#adaptive-pell-editor', handleEditorChange);
+
+    adaptiveCard = new AdaptiveCard();
+    adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);
 
     // Content elements
     adaptivePreview = document.querySelector('.adaptive-preview');
