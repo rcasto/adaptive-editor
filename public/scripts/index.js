@@ -1,6 +1,5 @@
 import defaultAdaptiveCardJson from './defaultAdaptiveCard';
 import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
-import utilities from './utilities';
 import { AdaptiveCard, HostConfig } from 'adaptivecards';
 import AdaptiveHtml from 'adaptive-html';
 import Pell from './pell';
@@ -27,25 +26,17 @@ var adaptiveToggleCardView;
 
 adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);
 
-function saveSession(editor) {
-    var html = editor.content.innerHTML;
-    var adaptiveCardJson = AdaptiveHtml.toJSON(html);
-    sessionStorage.setItem(adaptiveSessionKey, JSON.stringify(adaptiveCardJson));
+function saveSession(json) {
+    sessionStorage.setItem(adaptiveSessionKey, JSON.stringify(json));
 }
 
-function restoreSession(editor) {
+function restoreSession() {
     var adaptiveCardJson = sessionStorage.getItem(adaptiveSessionKey);
     if (!adaptiveCardJson) {
         adaptiveCardJson = defaultAdaptiveCardJson;
     }
     var adaptiveElem = AdaptiveHtml.toHTML(adaptiveCardJson);
-    editor.content.innerHTML = (adaptiveElem && adaptiveElem.outerHTML) || '';
-    handleEditorChange(editor, editor.content.innerHTML);
-    return {
-        editor,
-        html: editor.content.innerHTML,
-        json: adaptiveCardJson
-    };
+    return (adaptiveElem && adaptiveElem.outerHTML) || '';
 }
 
 function toggleEditorView() {
@@ -73,13 +64,20 @@ function copyJsonToClipboard() {
     document.execCommand('copy');
 }
 
-function handleEditorChange(editor, html) {
-    console.log(html);
+function handleEditorChange(html) {
+    var adaptiveCardJson = AdaptiveHtml.toJSON(html);
+
+    adaptivePreview.textContent = '';
+    adaptivePreviewJson.textContent = JSON.stringify(adaptiveCardJson, null, '\t');
+
+    adaptiveCard.parse(adaptiveCardJson);
+    adaptiveCard.render(adaptivePreview);
+    
+    saveSession(adaptiveCardJson);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     var editor = Pell.startEditor('#adaptive-pell-editor', handleEditorChange);
-    var adaptiveSession = restoreSession(editor);
 
     // Content elements
     adaptivePreview = document.querySelector('.adaptive-preview');
@@ -106,5 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
     adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
     adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
 
-    window.addEventListener('beforeunload', () => saveSession(editor));
+    editor.content.innerHTML = restoreSession();
+    handleEditorChange(editor.content.innerHTML);
 });

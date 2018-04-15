@@ -1,6 +1,6 @@
 import pell from 'pell';
 
-function defaultOnChangeHandler(editor, html) {
+function defaultOnChangeHandler(html) {
     console.log(`Output html: ${html}`);
 }
 
@@ -20,7 +20,7 @@ function startEditor(elemSelector, onChangeHandler) {
     }
     var editor = pell.init({
         element: elem,
-        onChange: html => onChangeHandler(editor, html),
+        onChange: onChangeHandler,
         actions: [
             'bold',
             'italic',
