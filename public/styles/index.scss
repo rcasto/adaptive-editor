@@ -6,6 +6,12 @@
     box-sizing: border-box;
 }
 
+h1 {
+    font-size: $header-font-size;
+    line-height: $header-font-size;
+    margin: $default-size 0 0 $default-size;
+}
+
 #adaptive-ckeditor, 
 .adaptive-default-content, 
 .adaptive-preview-view, 
@@ -15,7 +21,7 @@
 
 .adaptive-preview, 
 .adaptive-preview-json {
-    max-height: calc(100% - #{$adaptive-button-height} - #{$large-size});
+    max-height: calc(100% - #{$adaptive-button-height} - #{3 * $default-size} - #{$header-font-size});
     max-width: calc(100% - #{$large-size});
     height: 100%;
     width: 100%;
@@ -55,7 +61,7 @@
 .adaptive-button {
     height: $adaptive-button-height;
     width: $adaptive-button-width;
-    padding: $default-size;
+    padding: $extra-small-size $default-size;
     background-color: $button-color;
     border: $small-size solid $border-color;
     border-bottom: 0;
