@@ -4,6 +4,7 @@ var helmet = require('helmet');
 var compression = require('compression');
 
 var httpsRedirect = require('./lib/httpsRedirect');
+var wwwToNonWwwRedirect = require('./lib/wwwToNonWwwRedirect');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -13,6 +14,7 @@ app.use(helmet({
     noSniff: false
 }));
 app.use(httpsRedirect);
+app.use(wwwToNonWwwRedirect);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
