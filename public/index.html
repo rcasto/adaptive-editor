@@ -12,7 +12,7 @@
     <!-- Editor view (default) -->
     <div class="adaptive-editor-view">
         <div id="adaptive-pell-editor"></div>
-        <button class="adaptive-button adaptive-toggle-preview">&#9737;</button>
+        <button class="adaptive-button adaptive-toggle-preview" aria-label="Enter preview mode">&#128065;</button>
     </div>
     <!-- Preview view -->
     <div class="adaptive-preview-view">
@@ -20,16 +20,16 @@
         <div class="adaptive-preview-card-view">
             <div class="adaptive-preview"></div>
             <div class="adaptive-toggle-bar">
-                <button class="adaptive-button adaptive-toggle adaptive-toggle-editor">&#9999;</button>
-                <button class="adaptive-button adaptive-toggle adaptive-toggle-json">&#10100;..&#10101;</button>
+                <button class="adaptive-button adaptive-toggle adaptive-toggle-editor" aria-label="Enter editor mode">&#9999;</button>
+                <button class="adaptive-button adaptive-toggle adaptive-toggle-json" aria-label="Preview adaptive card JSON">&#10100;..&#10101;</button>
             </div>
         </div>
         <!-- Preview JSON view -->
         <div class="adaptive-preview-json-view">
             <textarea class="adaptive-preview-json" readonly title="Click within to copy the JSON to your clipboard"></textarea>
             <div class="adaptive-toggle-bar">
-                <button class="adaptive-button adaptive-toggle adaptive-toggle-editor">&#9999;</button>
-                <button class="adaptive-button adaptive-toggle adaptive-toggle-card">&#10066;</button>
+                <button class="adaptive-button adaptive-toggle adaptive-toggle-editor" aria-label="Enter editor mode">&#9999;</button>
+                <button class="adaptive-button adaptive-toggle adaptive-toggle-card" aria-label="Preview rendered adaptive card">&#10066;</button>
             </div>
         </div>
     </div>
