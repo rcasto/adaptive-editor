@@ -9,8 +9,14 @@
     }
     .pell-button {
         height: 100%;
-    }
-    .pell-button-selected {
-        
+        background-color: $button-color;
+
+        &.pell-button-selected, &:active {
+            background-color: $button-selected-color;
+        }
+
+        &:focus, &:hover {
+            background-color: $button-focused-color;
+        }
     }
 }
