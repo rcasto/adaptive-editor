@@ -39,6 +39,7 @@ function restoreSession() {
 function toggleEditorView() {
     adaptivePreviewView.style.display = 'none';
     adaptiveEditorView.style.display = 'block';
+    togglePreviewCardView();
 }
 
 function togglePreview() {
