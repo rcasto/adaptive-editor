@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "npm-run-all clean setup --parallel build:*",
-    "build:move": "npm-run-all --parallel move:assets move:server move:server-libs",
+    "build:move": "npm-run-all --parallel move:assets move:server move:server-libs move:verify-html",
     "build:sass": "sass public/styles/index.scss dist/public/index.css --style=compressed",
     "build:rollup": "rollup --config rollup.config.js --minify",
     "build:html": "html-minifier public/index.html --collapse-boolean-attributes --collapse-inline-tag-whitespace --collapse-whitespace --decode-entities --minify-css --minify-js --remove-attribute-quotes --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-tag-whitespace -o dist/public/index.html",
@@ -30,6 +30,7 @@
     "move:server-libs": "ncp lib dist/lib",
     "move:package.json": "cpy package*.json dist",
     "move:yaml": "cpy *.yaml dist",
+    "move:verify-html": "cpy public/google*.html dist/public",
     "setup": "mkdirp dist/public",
     "clean": "rimraf dist",
     "start": "node server.js",

@@ -4,3 +4,4 @@ deploy.sh
 .deployment
 dist
 app.yaml
+public/google*
