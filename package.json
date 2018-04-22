@@ -33,7 +33,7 @@
     "start": "node server.js",
     "start:dev": "npm-run-all --parallel dev start:server",
     "start:server": "node dist/server.js",
-    "deploy": "npm-run-all deploy:setup && cd dist && gcloud app deploy",
+    "deploy": "npm-run-all deploy:setup && cd dist && gcloud app deploy --quiet",
     "deploy:setup": "npm-run-all clean setup --parallel build:* move:package.json move:yaml"
   },
   "keywords": [
