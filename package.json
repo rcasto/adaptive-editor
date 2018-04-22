@@ -7,9 +7,13 @@
     "url": "https://github.com/rcasto/adaptive-editor.git"
   },
   "main": "server.js",
+  "engines": {
+    "node": ">=9.9.0",
+    "npm": ">=5.6.0"
+  },
   "scripts": {
     "build": "npm-run-all clean setup --parallel build:*",
-    "build:move": "npm-run-all --parallel move:html move:assets",
+    "build:move": "npm-run-all --parallel move:html move:assets move:server",
     "build:sass": "sass public/styles/index.scss dist/public/index.css --style=compressed",
     "build:rollup": "rollup --config rollup.config.js --minify",
     "dev": "npm-run-all clean setup --parallel build:move dev:*",
@@ -21,12 +25,16 @@
     "move:watch": "chokidar 'public/index.html' -c 'npm run build:move'",
     "move:html": "cpy 'public/*.html' 'dist/public'",
     "move:assets": "ncp public/images dist/public/images",
+    "move:server": "ncp server.js dist/server.js",
+    "move:package.json": "cpy package*.json dist",
+    "move:yaml": "cpy *.yaml dist",
     "setup": "mkdirp dist/public",
     "clean": "rimraf dist",
-    "prestart": "npm run build",
-    "start": "npm run start:server",
+    "start": "node server.js",
     "start:dev": "npm-run-all --parallel dev start:server",
-    "start:server": "node server.js"
+    "start:server": "node dist/server.js",
+    "deploy": "npm-run-all deploy:setup && cd dist && gcloud app deploy",
+    "deploy:setup": "npm-run-all clean setup --parallel build:* move:package.json move:yaml"
   },
   "keywords": [
     "wysiwyg",
