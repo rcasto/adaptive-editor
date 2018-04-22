@@ -58,6 +58,7 @@
     padding: $default-size;
     background-color: $adaptive-button-color;
     border: $small-size solid $border-color;
+    border-bottom: 0;
     border-radius: $large-size $large-size 0 0;
     font-size: 32px;
     line-height: 32px;
