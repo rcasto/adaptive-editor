@@ -5,3 +5,4 @@ deploy.sh
 dist
 app.yaml
 public/google*
+public/sitemap.xml
