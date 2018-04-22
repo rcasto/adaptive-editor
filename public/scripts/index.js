@@ -39,7 +39,6 @@ function restoreSession() {
 function toggleEditorView() {
     adaptivePreviewView.style.display = 'none';
     adaptiveEditorView.style.display = 'block';
-    togglePreviewCardView();
 }
 
 function togglePreview() {
@@ -71,6 +70,7 @@ function handleEditorChange(html) {
     adaptiveCard.parse(adaptiveCardJson);
     adaptiveCard.render(adaptivePreview);
 
+    togglePreviewCardView();
     saveSession(adaptiveCardJson);
 }
 
