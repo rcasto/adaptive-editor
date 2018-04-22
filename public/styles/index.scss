@@ -26,6 +26,7 @@
     resize: none;
     background-color: $adaptive-card-json-preview-background-color;
     border-radius: $large-size;
+    border: $small-size solid $border-color;
 }
 
 .adaptive-toggle-preview {
@@ -56,7 +57,7 @@
     width: $adaptive-button-width;
     padding: $default-size;
     background-color: $adaptive-button-color;
-    border-color: $adaptive-button-color;
+    border: $small-size solid $border-color;
     border-radius: $large-size $large-size 0 0;
     font-size: 32px;
     line-height: 32px;
