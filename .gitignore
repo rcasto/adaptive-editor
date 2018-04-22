@@ -3,3 +3,4 @@ public/vendors
 deploy.sh
 .deployment
 dist
+app.yaml
