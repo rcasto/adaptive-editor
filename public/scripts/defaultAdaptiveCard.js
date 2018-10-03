@@ -18,7 +18,7 @@ export default {
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "1. Edit this content, no really, I don't mind",
+					"text": "1. Edit this content, _no really_, I don't mind",
 					"wrap": true
 				}
 			]
