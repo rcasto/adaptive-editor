@@ -48,26 +48,26 @@
   "author": "Richie Casto",
   "license": "MIT",
   "dependencies": {
-    "compression": "^1.7.4",
-    "express": "^4.17.1",
-    "helmet": "^3.21.2"
+    "compression": "1.7.4",
+    "express": "4.17.1",
+    "helmet": "3.21.2"
   },
   "devDependencies": {
-    "adaptive-html": "^2.2.2",
-    "adaptivecards": "^1.2.5",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "chokidar-cli": "^1.2.3",
-    "cpy-cli": "^1.0.1",
-    "html-minifier": "^3.5.21",
-    "mkdirp": "^0.5.1",
-    "ncp": "^2.0.0",
-    "npm-run-all": "^4.1.5",
-    "pell": "^1.0.6",
-    "rimraf": "^2.7.1",
-    "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-uglify": "^3.0.0",
-    "sass": "^1.25.0"
+    "adaptive-html": "2.2.2",
+    "adaptivecards": "1.2.5",
+    "babel-core": "6.26.3",
+    "babel-preset-env": "1.7.0",
+    "chokidar-cli": "1.2.3",
+    "cpy-cli": "1.0.1",
+    "html-minifier": "3.5.21",
+    "mkdirp": "0.5.1",
+    "ncp": "2.0.0",
+    "npm-run-all": "4.1.5",
+    "pell": "1.0.6",
+    "rimraf": "2.7.1",
+    "rollup": "0.57.1",
+    "rollup-plugin-babel": "3.0.7",
+    "rollup-plugin-uglify": "3.0.0",
+    "sass": "1.25.0"
   }
 }
