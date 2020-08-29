@@ -8,8 +8,7 @@ var app = express();
 
 app.use(compression());
 app.use(helmet({
-    // contentSecurityPolicy: false,
-    // noSniff: false,
+    contentSecurityPolicy: false,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
