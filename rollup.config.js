@@ -1,15 +1,16 @@
-import babel from 'rollup-plugin-babel';
-import uglify from 'rollup-plugin-uglify';
+import babel from '@rollup/plugin-babel';
+import { terser } from "rollup-plugin-terser";
 
 var buildMinifiedLibrary = shouldMinify(process.argv);
 var plugins = [
     babel({
+        babelHelpers: 'bundled',
         exclude: 'node_modules/**' // only transpile our source code
     })
 ];
 
 if (buildMinifiedLibrary) {
-    plugins.unshift(uglify());
+    plugins.unshift(terser());
 }
 
 function shouldMinify(args) {

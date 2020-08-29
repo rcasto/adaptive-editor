@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "npm-run-all clean setup --parallel build:*",
-    "build:move": "npm-run-all --parallel move:assets move:server move:server-libs",
+    "build:move": "npm-run-all --parallel move:assets move:server",
     "build:sass": "sass public/styles/index.scss dist/public/index.css --style=compressed --no-source-map",
     "build:rollup": "rollup --config rollup.config.js --minify",
     "build:html": "html-minifier public/index.html --collapse-boolean-attributes --collapse-inline-tag-whitespace --collapse-whitespace --decode-entities --minify-css --minify-js --remove-attribute-quotes --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-tag-whitespace -o dist/public/index.html",
@@ -27,7 +27,6 @@
     "move:html": "cpy 'public/*.html' 'dist/public'",
     "move:assets": "ncp public/images dist/public/images",
     "move:server": "ncp server.js dist/server.js",
-    "move:server-libs": "ncp lib dist/lib",
     "move:package.json": "cpy package*.json dist",
     "move:sitemap": "cpy public/sitemap.xml dist/public",
     "move:yaml": "cpy *.yaml dist",
@@ -50,22 +49,22 @@
   "dependencies": {
     "compression": "1.7.4",
     "express": "4.17.1",
-    "helmet": "3.21.2"
+    "helmet": "4.1.0"
   },
   "devDependencies": {
-    "babel-core": "6.26.3",
-    "babel-preset-env": "1.7.0",
-    "chokidar-cli": "1.2.3",
-    "cpy-cli": "1.0.1",
-    "html-minifier": "3.5.21",
-    "mkdirp": "0.5.1",
+    "@babel/core": "7.11.4",
+    "@babel/preset-env": "7.11.0",
+    "@rollup/plugin-babel": "5.2.0",
+    "chokidar-cli": "2.1.0",
+    "cpy-cli": "3.1.1",
+    "html-minifier": "4.0.0",
+    "mkdirp": "1.0.4",
     "ncp": "2.0.0",
     "npm-run-all": "4.1.5",
     "pell": "1.0.6",
-    "rimraf": "2.7.1",
-    "rollup": "0.57.1",
-    "rollup-plugin-babel": "3.0.7",
-    "rollup-plugin-uglify": "3.0.0",
-    "sass": "1.25.0"
+    "rimraf": "3.0.2",
+    "rollup": "2.26.8",
+    "rollup-plugin-terser": "7.0.1",
+    "sass": "1.26.10"
   }
 }
