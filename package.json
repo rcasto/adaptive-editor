@@ -53,8 +53,6 @@
     "helmet": "3.21.2"
   },
   "devDependencies": {
-    "adaptive-html": "2.2.2",
-    "adaptivecards": "1.2.5",
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
     "chokidar-cli": "1.2.3",
