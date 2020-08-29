@@ -6,10 +6,8 @@
     box-sizing: border-box;
 }
 
-h1 {
-    font-size: $header-font-size;
-    line-height: $header-font-size;
-    margin: $default-size 0 0 $default-size;
+body, .adaptive-editor-view, #adaptive-pell-editor {
+    height: 100%;
 }
 
 #adaptive-ckeditor, 
