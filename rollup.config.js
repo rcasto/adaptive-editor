@@ -1,11 +1,19 @@
 import babel from '@rollup/plugin-babel';
 import { terser } from "rollup-plugin-terser";
+import { string } from "rollup-plugin-string";
 
 var buildMinifiedLibrary = shouldMinify(process.argv);
 var plugins = [
     babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**' // only transpile our source code
+    }),
+    string({
+        // Required to be specified
+        include: "**/*.html",
+
+        // Undefined by default
+        exclude: ["**/index.html"]
     })
 ];
 
