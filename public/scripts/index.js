@@ -1,4 +1,4 @@
-import defaultAdaptiveCardJson from './defaultAdaptiveCard';
+import defaultAdaptiveView from './defaultView.html';
 import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
 import { AdaptiveCard, HostConfig } from 'adaptivecards';
 import AdaptiveHtml from 'adaptive-html';
@@ -23,17 +23,16 @@ var adaptiveToggleJsonView;
 var adaptiveToggleEditorView;
 var adaptiveToggleCardView;
 
-function saveSession(json) {
-    sessionStorage.setItem(adaptiveSessionKey, JSON.stringify(json));
+function saveSession(html) {
+    sessionStorage.setItem(adaptiveSessionKey, html);
 }
 
 function restoreSession() {
-    var adaptiveCardJson = sessionStorage.getItem(adaptiveSessionKey);
-    if (!adaptiveCardJson) {
-        adaptiveCardJson = defaultAdaptiveCardJson;
+    var adaptiveView = sessionStorage.getItem(adaptiveSessionKey);
+    if (!adaptiveView) {
+        adaptiveView = defaultAdaptiveView;
     }
-    var adaptiveElem = AdaptiveHtml.toHTML(adaptiveCardJson);
-    return (adaptiveElem && adaptiveElem.outerHTML) || '';
+    return adaptiveView;
 }
 
 function toggleEditorView() {
@@ -71,7 +70,7 @@ function handleEditorChange(html) {
     adaptiveCard.render(adaptivePreview);
 
     togglePreviewCardView();
-    saveSession(adaptiveCardJson);
+    saveSession(html);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
