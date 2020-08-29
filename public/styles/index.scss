@@ -6,7 +6,11 @@
     box-sizing: border-box;
 }
 
-body, .adaptive-editor-view, #adaptive-pell-editor {
+body,
+.adaptive-editor-view,
+#adaptive-pell-editor,
+.adaptive-preview-view,
+.adaptive-preview-json-view {
     height: 100%;
 }
 
@@ -19,11 +23,9 @@ body, .adaptive-editor-view, #adaptive-pell-editor {
 
 .adaptive-preview, 
 .adaptive-preview-json {
-    max-height: calc(100% - #{$adaptive-button-height} - #{3 * $default-size} - #{$header-font-size});
-    max-width: calc(100% - #{$large-size});
+    max-height: calc(100% - #{$adaptive-button-height});
     height: 100%;
     width: 100%;
-    margin: $default-size;
 }
 
 .adaptive-preview-json {
