@@ -74,7 +74,7 @@ function handleEditorChange(html) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var editor = CKEditor.startEditor('#adaptive-pell-editor', handleEditorChange);
+    var editor = CKEditor.startEditor('#adaptive-ckeditor', handleEditorChange);
 
     adaptiveCard = new AdaptiveCard();
     adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);

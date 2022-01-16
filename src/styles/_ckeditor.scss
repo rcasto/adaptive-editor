@@ -1,0 +1,20 @@
+@import 'constants';
+
+#cke_adaptive-ckeditor {
+    &, *, *:before, *:after {
+        box-sizing: border-box;
+    }
+
+    &,
+    .cke_inner {
+        height: 100%;
+    }
+
+    .cke_top {
+        height: 42px !important;
+    }
+
+    .cke_contents {
+        height: calc(100% - 42px) !important;
+    }
+}

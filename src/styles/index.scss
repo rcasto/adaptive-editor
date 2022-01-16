@@ -1,6 +1,6 @@
 @import 'constants';
 @import 'adaptive-card';
-@import 'pell';
+@import 'ckeditor';
 
 *, *:before, *:after {
     box-sizing: border-box;
@@ -8,7 +8,6 @@
 
 body,
 .adaptive-editor-view,
-#adaptive-pell-editor,
 .adaptive-preview-view,
 .adaptive-preview-json-view {
     height: 100%;
