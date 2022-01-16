@@ -3,7 +3,6 @@
 
 ## Powered by
 Client side:
-- [pell](https://github.com/jaredreich/pell)
 - [adaptivecards](https://www.npmjs.com/package/adaptivecards)
 - [adaptive-html](https://www.npmjs.com/package/adaptive-html)
 - [markdown-it](https://www.npmjs.com/package/markdown-it)
