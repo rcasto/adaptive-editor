@@ -2,7 +2,14 @@ import defaultAdaptiveView from './defaultView.html';
 import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
 import { AdaptiveCard, HostConfig } from 'adaptivecards';
 import AdaptiveHtml from 'adaptive-html';
+import SimpleTrack from 'simple-track';
 import CKEditor from './ckeditor';
+
+const appName = 'adaptive-editor';
+const analyticsApiUrl = 'https://analytics-service-299521.ue.r.appspot.com/analytics';
+const eventTypes = {
+    pageView: 'page-view',
+};
 
 var adaptiveCard;
 var adaptiveSessionKey = 'adaptive-session';
@@ -74,7 +81,15 @@ function handleEditorChange(html) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var editor = CKEditor.startEditor('#adaptive-ckeditor', handleEditorChange);
+    const eventGenerator = SimpleTrack.createEventGenerator({
+        appName,
+        analyticsApiUrl,
+    });
+    const editor = CKEditor.startEditor('#adaptive-ckeditor', handleEditorChange);
+
+    eventGenerator.track(eventTypes.pageView, {
+        url: window.location.href,
+    });
 
     adaptiveCard = new AdaptiveCard();
     adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);

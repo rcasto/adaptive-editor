@@ -34,8 +34,13 @@ export default {
         globals: {
             adaptivecards: 'window.AdaptiveCards',
             'adaptive-html': 'window.AdaptiveHtml',
+            'simple-track': 'window.SimpleTrack'
         }
     },
     plugins: plugins,
-    external: ['adaptivecards', 'adaptive-html']
+    external: [
+        'adaptivecards',
+        'adaptive-html',
+        'simple-track'
+    ],
 };
