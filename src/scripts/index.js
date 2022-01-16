@@ -2,7 +2,7 @@ import defaultAdaptiveView from './defaultView.html';
 import defaultAdaptiveCardHostConfig from './defaultAdaptiveCardHostConfig';
 import { AdaptiveCard, HostConfig } from 'adaptivecards';
 import AdaptiveHtml from 'adaptive-html';
-import Pell from './pell';
+import CKEditor from './ckeditor';
 
 var adaptiveCard;
 var adaptiveSessionKey = 'adaptive-session';
@@ -74,7 +74,7 @@ function handleEditorChange(html) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var editor = Pell.startEditor('#adaptive-pell-editor', handleEditorChange);
+    var editor = CKEditor.startEditor('#adaptive-pell-editor', handleEditorChange);
 
     adaptiveCard = new AdaptiveCard();
     adaptiveCard.hostConfig = new HostConfig(defaultAdaptiveCardHostConfig);
@@ -104,6 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
     adaptiveToggleJsonView.addEventListener('click', togglePreviewJsonView);
     adaptiveToggleCardView.addEventListener('click', togglePreviewCardView);
 
-    editor.content.innerHTML = restoreSession();
-    handleEditorChange(editor.content.innerHTML);
+    editor.setData(restoreSession());
+    handleEditorChange(editor.getData());
 });

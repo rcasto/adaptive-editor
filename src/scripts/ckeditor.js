@@ -1,5 +1,3 @@
-import pell from 'pell';
-
 function defaultOnChangeHandler(html) {
     console.log(`Output html: ${html}`);
 }
@@ -18,20 +16,9 @@ function startEditor(elemSelector, onChangeHandler) {
         console.error(`Could not find element matching css element selector: ${elemSelector}`);
         return;
     }
-    var editor = pell.init({
-        element: elem,
-        onChange: onChangeHandler,
-        actions: [
-            'bold',
-            'italic',
-            'heading1',
-            'heading2',
-            'paragraph',
-            'olist',
-            'ulist',
-            'link',
-            'image'
-        ]
+    var editor = CKEDITOR.replace(elem);
+    editor.on('change', function (evt) {
+        onChangeHandler(evt.editor.getData());
     });
     return editor;
 }
