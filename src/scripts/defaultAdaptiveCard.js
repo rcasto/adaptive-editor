@@ -58,7 +58,7 @@ export default {
 			"items": [
 				{
 					"type": "Image",
-					"url": "/images/celebrate-heart.png",
+					"url": "./images/celebrate-heart.png",
 					"altText": "Celebration with heart"
 				}
 			]
