@@ -14,10 +14,18 @@
     .cke_top {
         display: flex;
         align-items: center;
-        height: 42px !important;
+        height: 75px !important;
+
+        @media (min-width: 366px) {
+            height: 42px !important;
+        }
     }
 
     .cke_contents {
-        height: calc(100% - 42px) !important;
+        height: calc(100% - 75px) !important;
+
+        @media (min-width: 366px) {
+            height: calc(100% - 42px) !important;
+        }
     }
 }
