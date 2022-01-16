@@ -1,7 +1,8 @@
 @import 'constants';
 
 #cke_adaptive-ckeditor {
-    &, *, *:before, *:after {
+    &,
+    .cke_top {
         box-sizing: border-box;
     }
 
@@ -11,6 +12,8 @@
     }
 
     .cke_top {
+        display: flex;
+        align-items: center;
         height: 42px !important;
     }
 
