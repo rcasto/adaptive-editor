@@ -7,28 +7,19 @@
     "url": "https://github.com/rcasto/adaptive-editor.git"
   },
   "engines": {
-    "node": ">=12.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=16.x.x",
+    "npm": ">=8.x.x"
   },
   "scripts": {
-    "build": "npm-run-all clean setup --parallel build:*",
-    "build:move": "npm-run-all --parallel move:assets",
-    "build:sass": "sass public/styles/index.scss dist/public/index.css --style=compressed --no-source-map",
+    "build": "npm-run-all clean --parallel build:*",
+    "build:sass": "sass src/styles/index.scss public/index.css --style=compressed --no-source-map",
     "build:rollup": "rollup --config rollup.config.js --minify",
-    "build:html": "html-minifier public/index.html --collapse-boolean-attributes --collapse-inline-tag-whitespace --collapse-whitespace --decode-entities --minify-css --minify-js --remove-attribute-quotes --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-tag-whitespace -o dist/public/index.html",
-    "dev": "npm-run-all clean setup --parallel build:move dev:*",
-    "dev:move": "npm-run-all build:move move:html move:watch",
+    "dev": "npm-run-all clean --parallel start dev:*",
     "dev:rollup": "rollup --config rollup.config.js --watch",
     "dev:sass": "npm-run-all sass:build-dev sass:build-watch",
-    "sass:build-watch": "chokidar 'public/styles/*.scss' -c 'npm run sass:build-dev'",
-    "sass:build-dev": "sass public/styles/index.scss dist/public/index.css",
-    "move:watch": "chokidar 'public/index.html' -c 'npm-run-all build:move move:html'",
-    "move:html": "cpy 'public/*.html' 'dist/public'",
-    "move:assets": "ncp public/images dist/public/images",
-    "move:sitemap": "cpy public/sitemap.xml dist/public",
-    "move:verify-html": "cpy public/google*.html dist/public",
-    "setup": "mkdirp dist/public",
-    "clean": "rimraf dist",
+    "sass:build-watch": "chokidar 'src/styles/*.scss' -c 'npm run sass:build-dev'",
+    "sass:build-dev": "sass src/styles/index.scss public/index.css",
+    "clean": "rimraf public/*.css public/*.css.map public/*.js",
     "start": "http-server ./public -p 3000"
   },
   "keywords": [

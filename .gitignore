@@ -1,5 +1,4 @@
 node_modules
-dist
-app.yaml
-public/google*
-.gcloudignore
+public/*.css
+public/*.css.map
+public/*.js
